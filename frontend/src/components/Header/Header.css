@@ -1,5 +1,6 @@
 .header {
   position: fixed;
+  border-radius: 6px;
   top: 0;
   left: 0;
   width: 100%;
@@ -7,10 +8,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #0028ab;
+  background: #BFCCB5;
 }
 
 .header h1 {
   margin: 0;
-  color: white;
+  color: #A9907E;
 }

@@ -1,8 +1,10 @@
 main {
   margin-top: 5rem;
+  background: #F2E3DB;
 }
 
 .loader {
   text-align: center;
   font-size: 2rem;
+  
 }
