@@ -29,31 +29,31 @@ const NewProduct = props => {
 
   return (
     <section id="new-product">
-      <h2>Add a New Product</h2>
+      <h2>Add Your Comments</h2>
       <form onSubmit={submitProductHandler}>
         <Input
           type="text"
-          label="Title"
+          label="Name"
           id="title"
           value={enteredTitle}
           onChange={titleChangeHandler}
         />
-        <Input
+        {/* <Input
           type="number"
           label="Price"
           step={0.01}
           id="price"
           value={enteredPrice}
           onChange={priceChangeHandler}
-        />
+        /> */}
         <Input
           type="text"
-          label="Description"
+          label="Comments"
           id="description"
           value={enteredDescription}
           onChange={descriptionChangeHandler}
         />
-        <Button type="submit">ADD PRODUCT</Button>
+        <Button type="submit">Comment</Button>
       </form>
     </section>
   );

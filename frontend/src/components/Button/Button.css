@@ -2,8 +2,8 @@
   font: inherit;
   padding: 0.5rem 2rem;
   border-radius: 6px;
-  background: #FFE1E1;
-  border: 1px solid #F3DEBA;
+  background: #A4BE7B;
+  border: 1px solid #A4BE7B;
   color: black;
   cursor: pointer;
 }
@@ -14,6 +14,6 @@
 
 .button:hover,
 .button:active {
-  background: #234edc;
-  border-color: #234edc;
+  background: #5F8D4E;
+  border-color: #5F8D4E;
 }
