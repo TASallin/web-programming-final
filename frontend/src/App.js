@@ -7,6 +7,8 @@ import PortfolioList from './components/PortfolioList/PortfolioList';
 import WebGLWindow from './components/WebGL/WebGLWindow';
 import WebGLApple from './components/WebGL/WebGLApple';
 import { Unity, useUnityContext } from "react-unity-webgl";
+import Post from './components/Products/Post';
+import PostList from './components/Products/PostList';
 import './App.css';
 
 function App() {
@@ -114,6 +116,7 @@ function App() {
         {!isLoading && <WebGLWindow active={active2} />}
         <NewProduct onAddProduct={addProductHandler} />
         {isLoading && <p className="loader">Loading...</p>}
+        {!isLoading && <PostList items={loadedProducts} />}
         {!isLoading && <ProductList playGameHandler={playGameHandler} items={games} />}
       </main>
     </React.Fragment>
