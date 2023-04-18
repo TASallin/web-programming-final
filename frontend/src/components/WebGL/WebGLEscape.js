@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Unity, useUnityContext } from "react-unity-webgl";
-import './WebGLWindow.css';
+import './WebGLEscape.css';
 
-const WebGLWindow = props => {
+const WebGLEscape = props => {
 
   const [loaded, setLoaded] = useState(false);
   const [finished, setFinished] = useState(true);
 
-  let {  unityProvider, unload } = useUnityContext({
-    loaderUrl: "./games/pizza/build/play.loader.js",
-    dataUrl: "./games/pizza/build/play.data",
-    frameworkUrl: "./games/pizza/build/play.framework.js",
-    codeUrl: "./games/pizza/build/play.wasm",
+  let {  unityProvider , loadingProgression, isLoaded, unload} = useUnityContext({
+    loaderUrl: "./games/escapeRoom/play.loader.js",
+    dataUrl: "./games/escapeRoom/play.data",
+    frameworkUrl: "./games/escapeRoom/play.framework.js",
+    codeUrl: "./games/escapeRoom/play.wasm",
   }); 
 
   async function unloadGame() {
@@ -48,4 +48,4 @@ const WebGLWindow = props => {
   
 };
 
-export default WebGLWindow;
+export default WebGLEscape;

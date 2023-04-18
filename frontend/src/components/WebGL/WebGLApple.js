@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Unity, useUnityContext } from "react-unity-webgl";
+import './WebGLApple.css';
 
 const WebGLWindow = props => {
 
@@ -28,16 +29,20 @@ const WebGLWindow = props => {
     if (finished === true) {
         setFinished(false);
     }
-    return <Unity unityProvider={unityProvider} />;
+    return <div className="unity">
+      <Unity unityProvider={unityProvider} style={{ width: "800px", height: "600px" }} />;
+    </div>
   } else {
-    console.log(loaded);
     if (loaded === true) {
       unloadGame();
     }
+
     if (finished === true) {
-      return <p>No game selected</p>;
+      return <div/>;
     } else {
-      return <Unity unityProvider={unityProvider} />;
+      return <div className="unity">
+        <Unity unityProvider={unityProvider} style={{ width: "800px", height: "600px" }} />;
+      </div>
     }
   }
   

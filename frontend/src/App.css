@@ -8,3 +8,16 @@ main {
   font-size: 2rem;
   
 }
+
+.stop-button {
+	float: right;
+}
+
+.welcome {
+	margin-right: 40px;
+	font-size: 24px;
+}
+
+.login {
+	float: right;
+}
