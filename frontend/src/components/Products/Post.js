@@ -5,8 +5,9 @@ import './Post.css';
 const Post = props => {
   return (
     <li className="Post">
-      <h2>Name: {props.title} props.title</h2>
-      <p>Comment: {props.description}</p>
+      <h5>Game: {props.game}</h5>
+      <h5>Author: {props.author}</h5>
+      <p>Comment: {props.comment}</p>
     </li>
   )
 //   const playGame = event => {

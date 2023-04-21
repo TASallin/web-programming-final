@@ -11,7 +11,7 @@ const PostList = props => {
     content = (
       <ul className="PostList">
         {props.items.map(p => (
-          <Post key={p.id} title={p.title} description={p.description} />
+          <Post key={p.id} game={p.game} author={p.author} comment={p.comment} />
         ))}
       </ul>
     );

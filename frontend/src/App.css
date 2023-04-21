@@ -21,3 +21,13 @@ main {
 .login {
 	float: right;
 }
+
+.comments {
+	float: left;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-areas:
+    'comment game login'
+}

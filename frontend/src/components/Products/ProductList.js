@@ -6,8 +6,6 @@ import './ProductList.css';
 const ProductList = props => {
 
   const playGameHandler = async (path) => {
-    console.log("Le boom boom boom");
-    console.log(path);
     props.playGameHandler(path);
   }
 
@@ -18,7 +16,7 @@ const ProductList = props => {
     content = (
       <ul className="product-list">
         {props.items.map(p => (
-          <ProductItem playGame={playGameHandler} key={p.id} name={p.name} text={p.text} link={p.link} />
+          <ProductItem playGame={playGameHandler} key={p.id} name={p.name} text={p.text} link={p.link} thumbnail={p.thumbnail} />
         ))}
       </ul>
     );

@@ -15,9 +15,10 @@ import Login from './components/Login/Login';
 import './App.css';
 
 function App() {
-  const [loadedProducts, setLoadedProducts] = useState([]);
+  const [loadedComments, setLoadedComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [path, setPath] = useState(0);
+  const [isGame, setIsGame] = useState(false);
   const [active0, setActive0] = useState(false);
   const [active1, setActive1] = useState(false);
   const [active2, setActive2] = useState(false);
@@ -25,10 +26,10 @@ function App() {
   const [username, setUsername] = useState("Guest");
 
   const [games, setGames] = useState([
-    { id: 'game1', text: 'Survival Horror on a budget', link: 0, name: 'Resident Apple For' },
-    { id: 'game2', text: 'Get all the keys and escape!', link: 1, name: 'Escape Room' },
-    { id: 'game3', text: 'Find enough change to pay for the pizza and then eat it', link: 2, name: 'Wesker Orders a Pizza' },
-    { id: 'game4', text: 'Find the secret and play music with your keyboard', link: 3, name: 'Music Land' },
+    { id: 'game1', text: 'Survival Horror on a budget', link: 0, name: 'Resident Apple For', thumbnail: "./apple.png" },
+    { id: 'game2', text: 'Get all the keys and escape!', link: 1, name: 'Escape Room', thumbnail: "./escapeRoom.png" },
+    { id: 'game3', text: 'Find enough change to pay for the pizza and then eat it', link: 2, name: 'Wesker Orders a Pizza', thumbnail: "./pizza.png" },
+    { id: 'game4', text: 'Find the secret and play music with your keyboard', link: 3, name: 'Music Land', thumbnail: "./musicLand.png" },
   ]);
 
   /*
@@ -43,39 +44,46 @@ function App() {
   useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
-      const response = await fetch('http://localhost:5000/products');
-
-      const responseData = await response.json();
-
-      console.log("Fetching products: " + responseData);
-
-      setLoadedProducts(responseData.products);
-      setIsLoading(false);
-    };
-
-    fetchProducts();
-  }, []);
-
-  const addProductHandler = async (productName, productPrice, productDescription) => {
-    try {
-
-      console.log(productName + " " + productPrice + " " + productDescription);
-
-      const newProduct = {
-        title: productName,
-        price: +productPrice, // "+" to convert string to number
-        description: productDescription
+      const theGame = {
+        game: games[path].name,
       };
-      let hasError = false;
-      const response = await fetch('http://localhost:5000/product', {
-        method: 'POST',
-        body: JSON.stringify(newProduct),
+      console.log(theGame);
+      const response = await fetch('http://localhost:5000/comments', {
+        method: 'PATCH',
+        body: JSON.stringify(theGame),
         headers: {
           'Content-Type': 'application/json'
         }
       });
+      const responseData = await response.json();
 
-     
+      console.log("Fetching comments: " + responseData);
+
+      setLoadedComments(responseData.comments);
+      setIsLoading(false);
+    };
+
+    fetchProducts();
+  }, [path]);
+
+  const addCommentHandler = async (comment) => {
+    try {
+
+      console.log(comment);
+
+      const newComment = {
+        game: games[path].name,
+        author: username,
+        comment: comment,
+      };
+      let hasError = false;
+      const response = await fetch('http://localhost:5000/comment', {
+        method: 'POST',
+        body: JSON.stringify(newComment),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
 
       if (!response.ok) {
         hasError = true;
@@ -83,18 +91,16 @@ function App() {
 
       const responseData = await response.json();
 
-   
-
       if (hasError) {
         throw new Error(responseData.message);
       }
 
-      setLoadedProducts(prevProducts => {
-        return prevProducts.concat({
-          ...newProduct,
-          id: responseData.product.id
-        });
-      });
+      //setLoadedComments(prevComments => {
+      //  return prevComments.concat({
+      //    ...newComment,
+      //    id: responseData.comment.id
+      //  });
+      //});
     } catch (error) {
       alert(error.message || 'Something went wrong!');
     }
@@ -102,6 +108,7 @@ function App() {
 
   const playGameHandler = async (path) => {
     setPath(path);
+    setIsGame(true);
     if (path == 0) {
       setActive0(true);
       setActive1(false);
@@ -130,6 +137,7 @@ function App() {
     setActive1(false);
     setActive2(false);
     setActive3(false);
+    setIsGame(false);
   }
 
   const loginHandler = async (username) => {
@@ -142,18 +150,30 @@ function App() {
     <React.Fragment>
       <Header />
       <main>
-        <div className="login">
-          <Login onLogin={loginHandler}/>
-          <p className="welcome">Welcome, {username}</p>
+        <div className="grid-container">
+          <div className="grid-item">
+            <NewProduct onAddComment={addCommentHandler} />
+            {(!isLoading && isGame) && <PostList className = "comments" items={loadedComments} />}
+          </div>
+          <div className="grid-item">
+            {<WebGLApple active={active0} />}
+            {<WebGLEscape active={active1} />}
+            {<WebGLWindow active={active2} />}
+            {<WebGLMusic active={active3} />}
+          </div>
+          <div className="grid-item">
+            <div className="login">
+              <Login onLogin={loginHandler}/>
+              <p className="welcome">Welcome, {username}</p>
+            </div>
+          </div>
         </div>
-        {<WebGLApple active={active0} />}
-        {<WebGLEscape active={active1} />}
-        {<WebGLWindow active={active2} />}
-        {<WebGLMusic active={active3} />}
+        
+        
         <button type='button' className="stop-button" onClick={() => stopGameHandler()}>Stop Current Game</button>
-        <NewProduct onAddProduct={addProductHandler} />
+        
         {isLoading && <p className="loader">Loading...</p>}
-        {!isLoading && <PostList items={loadedProducts} />}
+        
         {!isLoading && <ProductList playGameHandler={playGameHandler} items={games} />}
       </main>
     </React.Fragment>

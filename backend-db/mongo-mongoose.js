@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Product = require('./models/product');
+const Comment = require('./models/comment');
 
 const database = 'GameTrack';
 const url = "mongodb+srv://TristanSallin:SoliIsAKitten133@cluster0.ohpsmwj.mongodb.net/GameTrack?retryWrites=true&w=majority";
@@ -12,29 +12,36 @@ mongoose.connect(url).then(() => {
     console.log('Connection failed!')
 });
 
-const createProduct = async (req, res, next) => {
-	console.log('Creating a new product object!');
-	const createdProduct = new Product({
-	  title: req.body.title,
-	  price: req.body.price,
-	  description: req.body.description
+const createComment = async (req, res, next) => {
+	console.log('Creating a new comment object!');
+	const createdComment = new Comment({
+	  game: req.body.game,
+	  author: req.body.author,
+	  comment: req.body.comment
 	});
 	
-	const result = await createdProduct.save();
+	const result = await createdComment.save();
 	console.log('Result: ' + JSON.stringify(result));
 	// res.json(result);
 	res.status(201)
-    .json({ message: 'Created new product.', product: result });
+    .json({ message: 'Created new comment.', comment: result });
   };
   
-const getProducts = async (req, res, next) => {
-	console.log('Requesting the list of products!');
-	const products = await Product.find().exec();
-	// console.log('Result: ' + JSON.stringify(products));
-	// res.json(products);
-	res.status(200).json({ products: products });
+const getComments = async (req, res, next) => {
+	console.log('Requesting the list of comments!');
+	if (req.body.game) {
+	  console.log(req.body);
+	  const comments = await Comment.find({game: req.body.game}).exec();
+	  // console.log('Result: ' + JSON.stringify(products));
+	  // res.json(products);
+	  res.status(200).json({ comments: comments });
+	} else {
+	  const comments = await Comment.find().exec();
+	  res.status(200).json({ comments: comments });
+	}
+	
   }
   
-exports.createProduct = createProduct;
-exports.getProducts = getProducts;
+exports.createComment = createComment;
+exports.getComments = getComments;
   

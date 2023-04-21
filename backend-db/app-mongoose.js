@@ -22,8 +22,8 @@ app.use((req, res, next) => {
   });
 
   
-app.post('/product', mongoPractice.createProduct);
+app.post('/comment', mongoPractice.createComment);
 
-app.get('/products', mongoPractice.getProducts);
+app.patch('/comments', mongoPractice.getComments);
 
 app.listen(5000);
