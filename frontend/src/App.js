@@ -44,27 +44,48 @@ function App() {
   useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
-      const theGame = {
-        game: games[path].name,
-      };
-      console.log(theGame);
-      const response = await fetch('http://localhost:5000/comments', {
-        method: 'PATCH',
-        body: JSON.stringify(theGame),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const responseData = await response.json();
+      if (isGame) {
+        const theGame = {
+          game: games[path].name,
+        };
+        const response = await fetch('http://localhost:5000/comments', {
+          method: 'PATCH',
+          body: JSON.stringify(theGame),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const responseData = await response.json();
 
-      console.log("Fetching comments: " + responseData);
+        console.log("Fetching comments: " + responseData);
+         
+        setLoadedComments(responseData.comments);
+        setIsLoading(false);
+      } else {
+        const theUser = {
+          author: username,
+        };
+        console.log(username);
+        const response = await fetch('http://localhost:5000/comments', {
+          method: 'PATCH',
+          body: JSON.stringify(theUser),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const responseData = await response.json();
 
-      setLoadedComments(responseData.comments);
-      setIsLoading(false);
+        console.log("Fetching comments: " + responseData);
+
+        setLoadedComments(responseData.comments);
+        setIsLoading(false);
+      }
+      
+      
     };
 
     fetchProducts();
-  }, [path]);
+  }, [path, isGame, username]);
 
   const addCommentHandler = async (comment) => {
     try {
@@ -140,8 +161,8 @@ function App() {
     setIsGame(false);
   }
 
-  const loginHandler = async (username) => {
-    setUsername(username);
+  const loginHandler = async (newName) => {
+    setUsername(newName);
   }
 
   //return <Unity unityProvider={unityProvider} />;
@@ -160,6 +181,8 @@ function App() {
             {<WebGLEscape active={active1} />}
             {<WebGLWindow active={active2} />}
             {<WebGLMusic active={active3} />}
+            {(!isLoading && !isGame) && <h2>My Comments</h2>}
+            {(!isLoading && !isGame) && <PostList className = "comments" items={loadedComments} />}
           </div>
           <div className="grid-item">
             <div className="login">

@@ -30,10 +30,12 @@ const createComment = async (req, res, next) => {
 const getComments = async (req, res, next) => {
 	console.log('Requesting the list of comments!');
 	if (req.body.game) {
-	  console.log(req.body);
 	  const comments = await Comment.find({game: req.body.game}).exec();
 	  // console.log('Result: ' + JSON.stringify(products));
 	  // res.json(products);
+	  res.status(200).json({ comments: comments });
+	} else if (req.body.author) {
+      const comments = await Comment.find({author: req.body.author}).exec();;
 	  res.status(200).json({ comments: comments });
 	} else {
 	  const comments = await Comment.find().exec();

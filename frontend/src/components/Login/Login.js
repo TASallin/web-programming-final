@@ -13,7 +13,6 @@ const Login = props => {
 
   const submitUsernameHandler = event => {
     event.preventDefault();
-    console.log("logging in");
     props.onLogin(enteredName);
   };
 
