@@ -24,6 +24,10 @@ app.use((req, res, next) => {
   
 app.post('/comment', mongoPractice.createComment);
 
+app.post('/highscore', mongoPractice.createScore);
+
 app.patch('/comments', mongoPractice.getComments);
+
+app.patch('/highscores', mongoPractice.getScores);
 
 app.listen(5000);

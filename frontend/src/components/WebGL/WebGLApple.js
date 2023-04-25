@@ -6,16 +6,26 @@ const WebGLWindow = props => {
 
   const [loaded, setLoaded] = useState(false);
   const [finished, setFinished] = useState(true);
+  const [score, setScore] = useState(0);
 
-  let {  unityProvider , loadingProgression, isLoaded, unload} = useUnityContext({
+  let {  unityProvider , loadingProgression, isLoaded, unload, addEventListener, removeEventListener} = useUnityContext({
     loaderUrl: "./games/apple/build/play.loader.js",
     dataUrl: "./games/apple/build/play.data",
     frameworkUrl: "./games/apple/build/play.framework.js",
     codeUrl: "./games/apple/build/play.wasm",
   }); 
 
+  useEffect(() => {
+    addEventListener("SetScore", setScore);
+    return () => {
+      removeEventListener("SetScore", setScore);
+    };
+  }, [addEventListener, removeEventListener, setScore]);
+
   async function unloadGame() {
     if (loaded === true) {
+      console.log(score);
+      props.onAddScore(score);
       setLoaded(false);
       await unload();
       setFinished(true);
@@ -27,7 +37,7 @@ const WebGLWindow = props => {
       setLoaded(true);
     }
     if (finished === true) {
-        setFinished(false);
+      setFinished(false);
     }
     return <div className="unity">
       <Unity unityProvider={unityProvider} style={{ width: "800px", height: "600px" }} />;

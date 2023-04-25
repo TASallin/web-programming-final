@@ -12,10 +12,12 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 import Post from './components/Products/Post';
 import PostList from './components/Products/PostList';
 import Login from './components/Login/Login';
+import Leaderboard from './components/Scores/Leaderboard';
 import './App.css';
 
 function App() {
   const [loadedComments, setLoadedComments] = useState([]);
+  const [loadedScores, setLoadedScores] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [path, setPath] = useState(0);
   const [isGame, setIsGame] = useState(false);
@@ -60,6 +62,20 @@ function App() {
         console.log("Fetching comments: " + responseData);
          
         setLoadedComments(responseData.comments);
+
+        const response2 = await fetch('http://localhost:5000/highscores', {
+          method: 'PATCH',
+          body: JSON.stringify(theGame),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const responseData2 = await response2.json();
+
+        console.log("Fetching scores: " + responseData2);
+         
+        setLoadedScores(responseData2.scores);
+
         setIsLoading(false);
       } else {
         const theUser = {
@@ -78,6 +94,23 @@ function App() {
         console.log("Fetching comments: " + responseData);
 
         setLoadedComments(responseData.comments);
+
+        const theUser2 = {
+          player: username,
+        };
+        const response2 = await fetch('http://localhost:5000/highscores', {
+          method: 'PATCH',
+          body: JSON.stringify(theUser2),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const responseData2 = await response2.json();
+
+        console.log("Fetching scores: " + responseData2);
+
+        setLoadedScores(responseData2.scores);
+
         setIsLoading(false);
       }
       
@@ -86,6 +119,7 @@ function App() {
 
     fetchProducts();
   }, [path, isGame, username]);
+
 
   const addCommentHandler = async (comment) => {
     try {
@@ -101,6 +135,46 @@ function App() {
       const response = await fetch('http://localhost:5000/comment', {
         method: 'POST',
         body: JSON.stringify(newComment),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        hasError = true;
+      }
+
+      const responseData = await response.json();
+
+      if (hasError) {
+        throw new Error(responseData.message);
+      }
+
+      //setLoadedComments(prevComments => {
+      //  return prevComments.concat({
+      //    ...newComment,
+      //    id: responseData.comment.id
+      //  });
+      //});
+    } catch (error) {
+      alert(error.message || 'Something went wrong!');
+    }
+  };
+
+  const addScoreHandler = async (score) => {
+    try {
+
+      console.log(score);
+
+      const newScore = {
+        game: games[path].name,
+        player: username,
+        score: score,
+      };
+      let hasError = false;
+      const response = await fetch('http://localhost:5000/highscore', {
+        method: 'POST',
+        body: JSON.stringify(newScore),
         headers: {
           'Content-Type': 'application/json'
         }
@@ -177,18 +251,20 @@ function App() {
             {(!isLoading && isGame) && <PostList className = "comments" items={loadedComments} />}
           </div>
           <div className="grid-item">
-            {<WebGLApple active={active0} />}
+            {<WebGLApple onAddScore={addScoreHandler} active={active0} />}
             {<WebGLEscape active={active1} />}
             {<WebGLWindow active={active2} />}
             {<WebGLMusic active={active3} />}
             {(!isLoading && !isGame) && <h2>My Comments</h2>}
             {(!isLoading && !isGame) && <PostList className = "comments" items={loadedComments} />}
+            {(!isLoading && !isGame) && <Leaderboard className = "comments" items={loadedScores} />}
           </div>
           <div className="grid-item">
             <div className="login">
               <Login onLogin={loginHandler}/>
               <p className="welcome">Welcome, {username}</p>
             </div>
+            {(!isLoading && isGame && active0) && <Leaderboard className = "comments" items={loadedScores} />}
           </div>
         </div>
         
