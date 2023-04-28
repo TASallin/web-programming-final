@@ -1,20 +1,20 @@
-#products {
+#games {
   width: 90%;
   max-width: 80rem;
   margin: 2rem auto;
 }
 
-#products > p {
+#games > p {
   text-align: center;
 }
 
-.product-list {
+.game-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.product-list ul{
+.game-list ul{
   display: inline;
   overflow: hidden;
 }

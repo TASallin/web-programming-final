@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 import Header from './components/Header/Header';
-import NewProduct from './components/Products/NewProduct';
-import ProductList from './components/Products/ProductList';
-import PortfolioList from './components/PortfolioList/PortfolioList';
+import NewComment from './components/Comments/NewComment';
+import GameList from './components/Games/GameList';
 import WebGLWindow from './components/WebGL/WebGLWindow';
 import WebGLApple from './components/WebGL/WebGLApple';
 import WebGLEscape from './components/WebGL/WebGLEscape';
 import WebGLMusic from './components/WebGL/WebGLMusic';
 import { Unity, useUnityContext } from "react-unity-webgl";
-import Post from './components/Products/Post';
-import PostList from './components/Products/PostList';
+import Post from './components/Comments/Post';
+import PostList from './components/Comments/PostList';
 import Login from './components/Login/Login';
 import Leaderboard from './components/Scores/Leaderboard';
 import './App.css';
@@ -26,6 +25,7 @@ function App() {
   const [active2, setActive2] = useState(false);
   const [active3, setActive3] = useState(false);
   const [username, setUsername] = useState("Guest");
+  const [isGuest, setIsGuest] = useState(true);
 
   const [games, setGames] = useState([
     { id: 'game1', text: 'Survival Horror on a budget', link: 0, name: 'Resident Apple For', thumbnail: "./apple.png" },
@@ -237,6 +237,12 @@ function App() {
 
   const loginHandler = async (newName) => {
     setUsername(newName);
+    setIsGuest(false);
+  }
+
+  const logoutHandler = async() => {
+    setIsGuest(true);
+    setUsername("Guest");
   }
 
   //return <Unity unityProvider={unityProvider} />;
@@ -247,7 +253,7 @@ function App() {
       <main>
         <div className="grid-container">
           <div className="grid-item">
-            <NewProduct onAddComment={addCommentHandler} />
+            <NewComment onAddComment={addCommentHandler} />
             {(!isLoading && isGame) && <PostList className = "comments" items={loadedComments} />}
           </div>
           <div className="grid-item">
@@ -261,8 +267,9 @@ function App() {
           </div>
           <div className="grid-item">
             <div className="login">
-              <Login onLogin={loginHandler}/>
-              <p className="welcome">Welcome, {username}</p>
+              {isGuest && <Login onLogin={loginHandler}/>}
+              {!isGuest && <button type='button' className="logout-button" onClick={() => logoutHandler()}>Logout</button>}
+              {!isGuest && <p className="welcome">Welcome, {username}</p>}
             </div>
             {(!isLoading && isGame && active0) && <Leaderboard className = "comments" items={loadedScores} />}
           </div>
@@ -273,7 +280,7 @@ function App() {
         
         {isLoading && <p className="loader">Loading...</p>}
         
-        {!isLoading && <ProductList playGameHandler={playGameHandler} items={games} />}
+        {!isLoading && <GameList playGameHandler={playGameHandler} items={games} />}
       </main>
     </React.Fragment>
   );

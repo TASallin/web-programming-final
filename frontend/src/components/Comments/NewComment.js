@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import Input from '../Input/Input';
 import Button from '../Button/Button';
-import './NewProduct.css';
+import './NewComment.css';
 
-const NewProduct = props => {
+const NewComment = props => {
   const [enteredComment, setEnteredComment] = useState('');
 
   const commentChangeHandler = event => {
@@ -18,7 +18,7 @@ const NewProduct = props => {
   };
 
   return (
-    <section id="new-product">
+    <section id="new-comment">
       <h2>Add Your Comments</h2>
       <form onSubmit={submitProductHandler}>
         <Input
@@ -34,4 +34,4 @@ const NewProduct = props => {
   );
 };
 
-export default NewProduct;
+export default NewComment;
