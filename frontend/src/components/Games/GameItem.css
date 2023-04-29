@@ -1,6 +1,15 @@
+.play-button{
+  background: #A4BE7B;
+  cursor: pointer;
+}
+.play-button:hover{
+  background: #5F8D4E;
+  border-color: #5F8D4E;
+}
 .game-item {
   margin: 1rem 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  background-color:#F2E3DB;
   border-radius: 6px;
   padding: 1rem;
   width: 25%;

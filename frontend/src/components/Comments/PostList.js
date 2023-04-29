@@ -9,11 +9,11 @@ const PostList = props => {
     content = <p>Could not find any comments. Maybe create one?</p>;
   } else {
     content = (
-      <ul className="PostList">
+      <li className="PostList">
         {props.items.map(p => (
           <Post key={p.id} game={p.game} author={p.author} comment={p.comment} />
         ))}
-      </ul>
+      </li>
     );
   }
   

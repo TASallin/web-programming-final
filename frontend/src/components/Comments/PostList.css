@@ -2,13 +2,15 @@
   width: 90%;
   max-width: 40rem;
   margin: 2rem auto;
+  color: #665A48;
+ 
 }
 
 #products > p {
   text-align: center;
 }
 
-.PostList {
+.PostList{
   list-style: none;
   margin: 0;
   padding: 0;

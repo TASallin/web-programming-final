@@ -14,11 +14,11 @@ const GameList = props => {
     content = <p>Could not find any games due to an unknown error</p>;
   } else {
     content = (
-      <ul className="game-list">
+      <li className="game-list">
         {props.items.map(p => (
           <GameItem playGame={playGameHandler} key={p.id} name={p.name} text={p.text} link={p.link} thumbnail={p.thumbnail} />
         ))}
-      </ul>
+      </li>
     );
   }
 

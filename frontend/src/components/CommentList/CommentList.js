@@ -5,7 +5,7 @@ const CommentList = props => {
   
   //List of comments shows the text, author, a section for the likes including two buttons
   return (
-    <ul className='comment-list'>
+    <li className='comment-list'>
       {props.comments.map(comment => {
         return <li key={comment.id}>
         <p>{comment.text}</p>
@@ -14,7 +14,7 @@ const CommentList = props => {
         <span>{comment.likes}</span>
         <button className='dislike-button' type='button' onClick={() => props.onClick(comment.id, -1)}>Dislike</button></li>
       } )}
-    </ul>
+    </li>
   );
 };
 
