@@ -2,6 +2,7 @@ import React from 'react';
 
 import './GameItem.css';
 
+//A clickable game element as displayed on screen showing the title, description, and play button
 const GameItem = props => {
 
   const playGame = event => {
@@ -11,7 +12,7 @@ const GameItem = props => {
   return (
     <li className="game-item">
       <img src={props.thumbnail} alt="game thumbnail"/>
-      <a href={props.link}>{props.name}</a>
+      <h2>{props.name}</h2>
       <p>{props.text}</p>
       <button type='button' className="play-button" onClick={() => playGame(props.link)}>Play!</button>
     </li>

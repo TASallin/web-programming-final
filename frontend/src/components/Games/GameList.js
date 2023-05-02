@@ -3,6 +3,7 @@ import React from 'react';
 import GameItem from './GameItem';
 import './GameList.css';
 
+//The list of games as displayed on screen 
 const GameList = props => {
 
   const playGameHandler = async (path) => {

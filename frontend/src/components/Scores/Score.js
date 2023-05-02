@@ -2,6 +2,7 @@ import React from 'react';
 
 import './Score.css';
 
+//A highscore as it is displayed on screen, showing the game, player, and score
 const Score = props => {
   return (
     <li className="Score">
@@ -10,19 +11,6 @@ const Score = props => {
       <p>Score: {props.score}</p>
     </li>
   )
-//   const playGame = event => {
-//     console.log("Hi!");
-//     console.log(props.link);
-//     props.playGame(props.link);
-//   }
-
-//   return (
-//     <li className="product-item">
-//       <a href={props.link}>{props.name}</a>
-//       <p>Description: {props.text}</p>
-//       <button type='button' className="play-button" onClick={() => playGame(props.link)}>Play!</button>
-//     </li>
-//   );
 };
 
 export default Score;

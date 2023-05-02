@@ -1,18 +1,20 @@
 const mongoose = require('mongoose');
 
+//Both models hold game and player information, as well as either the comment or score itself
 const Comment = require('./models/comment');
 const Score = require('./models/score');
 
 const database = 'GameTrack';
 const url = "mongodb+srv://TristanSallin:SoliIsAKitten133@cluster0.ohpsmwj.mongodb.net/GameTrack?retryWrites=true&w=majority";
 
-// sample mongodb url- please generate your own
+// top part of code is from the mongoose example aside fom database, url name, and models
 mongoose.connect(url).then(() => {
     console.log('Connected to database!')
 }).catch(() => {
     console.log('Connection failed!')
 });
 
+//createComment adds a new comment to the database, keeping track of its game and author as well
 const createComment = async (req, res, next) => {
 	console.log('Creating a new comment object!');
 	const createdComment = new Comment({
@@ -28,6 +30,8 @@ const createComment = async (req, res, next) => {
     .json({ message: 'Created new comment.', comment: result });
   };
 
+// createScore is more particular than comments, and there can only be one score per player/game combination.
+// if a score already exists, it is only changed if the new score is higher.
 const createScore = async (req, res, next) => {
 	console.log('Creating a new score object!');
 	const createdScore = new Score({
@@ -52,6 +56,7 @@ const createScore = async (req, res, next) => {
 	}
   };
   
+// getComments allows either a game or a player to be passed in as a filter. If neither exist, it returns all of the comments
 const getComments = async (req, res, next) => {
 	console.log('Requesting the list of comments!');
 	if (req.body.game) {
@@ -69,6 +74,7 @@ const getComments = async (req, res, next) => {
 	
   }
 
+ // getScores, like getComments, allows a game or player to be used as a filter, returning all scores if neither is found
 const getScores = async (req, res, next) => {
 	console.log('Requesting the list of scores!');
 	if (req.body.game) {

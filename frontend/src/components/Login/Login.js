@@ -4,6 +4,7 @@ import Input from '../Input/Input';
 import Button from '../Button/Button';
 import './Login.css';
 
+//The input form for logging in. Does not require password authentication
 const Login = props => {
   const [enteredName, setEnteredName] = useState('');
 
@@ -16,6 +17,7 @@ const Login = props => {
     props.onLogin(enteredName);
   };
 
+  //Has just a field to enter username and a login button
   return (
     <section id="login">
       <form onSubmit={submitUsernameHandler}>

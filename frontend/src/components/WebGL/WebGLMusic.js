@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Unity, useUnityContext } from "react-unity-webgl";
 import './WebGLMusic.css';
 
+//The WebGL Window for the music game
+//See WebGLApple for detailed comments
 const WebGLMusic = props => {
 
   const [loaded, setLoaded] = useState(false);

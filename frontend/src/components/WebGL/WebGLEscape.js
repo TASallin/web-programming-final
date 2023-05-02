@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Unity, useUnityContext } from "react-unity-webgl";
 import './WebGLEscape.css';
 
+//The WebGL Window for the escape room game
+//See WebGLApple for detailed comments
 const WebGLEscape = props => {
 
   const [loaded, setLoaded] = useState(false);

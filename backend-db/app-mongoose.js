@@ -7,7 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-// CORS Headers => Required for cross-origin/ cross-server communication
+//Most of this is copied from the mongoose example code
 app.use((req, res, next) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader(
@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 	next();
   });
 
-  
+//here are the routes. Patch is used over Get because there was an error when trying to send filters via JSON over a get method  
 app.post('/comment', mongoPractice.createComment);
 
 app.post('/highscore', mongoPractice.createScore);
